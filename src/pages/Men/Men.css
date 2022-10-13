@@ -1,0 +1,153 @@
+* {
+     margin: 0;
+     padding: 0;
+}
+
+.men-text {
+     text-align: center;
+     font-size: 40px;
+     margin-bottom: 80px;
+     margin-top: 80px;
+}
+
+.mens-wear-container {
+     position: relative;
+}
+.men-container {
+     display: grid;
+     grid-template-columns: 1fr repeat(1, minmax(auto, 1fr));
+     place-items: center;
+}
+
+.for-men {
+     display: flex;
+     width: 100%;
+     position: absolute;
+     top: 0;
+     height: 99%;
+     color: white;
+     background-color: rgba(0, 0, 0, 0.6);
+     opacity: 0;
+     transition: opacity 0.25s;
+     cursor: pointer;
+}
+
+.for-men > * {
+     transform: translateY(20px);
+     transition: transform 0.25s;
+}
+
+.for-men:hover > * {
+     transform: translateY(0);
+}
+
+.img-container {
+     position: relative;
+     margin-bottom: 50px;
+}
+
+.men-heading {
+     margin-bottom: 10px;
+
+}
+
+.men-heading {
+     text-align: center;
+     font-size: 30px;
+     font-family: Lato;
+     font-weight: 400;
+     
+}
+.mens-wear-desc {
+     text-align: center;
+     inline-size: 400px;
+     font-size: 30px;
+     width: 100%;
+     height: 100%;
+     position: relative;
+     bottom: 20px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+
+.for-men:hover {
+     opacity: 1;
+}
+
+.mens-img {
+     width: 400px;
+     height: 550px;
+}
+
+@media screen and (max-width: 1300px) {
+     .men-container {
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+     }
+
+     .for-men {
+          position: static;
+          background-color: #fff;
+     }
+
+     .img-container {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
+     }
+
+     .men-heading{
+               margin-bottom: 10px !important; 
+     }
+
+     .mens-wear-desc {
+          inline-size: 400px;
+          background-color: none;
+          transform: none;
+          cursor: default;
+     }
+
+     .men-heading {
+          margin-bottom: 0px;
+     }
+     .for-men {
+          opacity: 1;
+     }
+
+     .mens-wear-desc {
+          position: static;
+          color: black;
+          font-size: 22px;
+     }
+}
+@media screen and (min-width: 709px) and (max-width: 859.5px) {
+     .men-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+     
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .men-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+
+     .for-men {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+
+     .mens-img {
+          width: 90%;
+     }
+
+     .mens-wear-desc {
+          inline-size: 300px;
+     }
+}

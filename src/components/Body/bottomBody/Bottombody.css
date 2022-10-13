@@ -1,0 +1,178 @@
+.learn-about-us {
+     text-align: center;
+     display: table;
+     margin: 0 auto;
+     left: 0;
+     right: 0;
+     padding: 15px 40px;
+     font-family: lato;
+     text-transform: uppercase;
+     font-weight: 700;
+     font-size: 13px;
+     border: 1px solid;
+}
+
+.quote-company {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-evenly;
+     height: 350px;
+     align-items: center;
+     margin-top: 120px !important;
+     border-top: 1px solid rgba(226, 226, 226, 1);
+     margin: 40px;
+}
+
+.quote-company h4 {
+     text-align: center;
+     font-family: Bodoni Moda;
+     font-size: 30px;
+     margin-top: 100px !important;
+}
+
+.logo-container {
+     display: flex;
+     justify-content: center;
+     gap: 80px;
+}
+
+.gram-container {
+     display: flex;
+     justify-content: center;
+     margin-bottom: 40px;
+}
+
+hr {
+     display: none;
+}
+
+.gram-container img {
+     margin: 20px;
+     height: 250px;
+     align-self: center;
+}
+
+.line {
+     border-top: 1px solid rgba(226, 226, 226, 1);
+}
+
+.on-the-gram {
+     display: flex;
+     justify-content: space-between;
+     margin: 3.6%;
+}
+
+.on-the-gram p {
+     margin-top: 90px;
+     text-transform: uppercase;
+     padding: 10px 25px;
+     font-size: 15px;
+     font-family: Roboto;
+     font-weight: 600;
+}
+
+.instagram {
+     background-color: #000;
+     color: white;
+     border-radius: 50%;
+     padding: 5px 5px;
+     font-size: 15px;
+     margin-left: 20px;
+}
+
+.follow-us {
+     border: 1.5px solid;
+     font-size: 10px !important;
+     font-family: Lato !important;
+}
+
+.email-us {
+     border: 1px solid;
+     display: flex;
+     justify-content: center;
+     border-top: 1px solid rgba(226, 226, 226, 1);
+     border-right: none;
+     border-bottom: none;
+}
+
+.email-us h5 {
+     text-transform: uppercase;
+}
+
+.fa-face-smile {
+     margin-right: 10px;
+}
+
+.email-input {
+     padding: 15px;
+     outline: none;
+     width: 30%;
+}
+
+.email-input::placeholder {
+     color: black;
+}
+
+.email-us .email-text,
+.email-input {
+     margin: 40px;
+}
+
+@media screen and (max-width: 1300px) {
+     .product-list {
+          inline-size: 100px;
+     }
+     .quote-company {
+          margin: 0;
+     }
+
+     .quote-company h4 {
+          font-size: 25px;
+          margin: 10px;
+     }
+     .logo-container {
+          gap: 30px;
+     }
+
+     .logo-container img {
+          width: 90px;
+     }
+
+     .on-the-gram {
+          align-items: center;
+     }
+
+     .gram-container img {
+          display: none;
+     }
+     .email-us {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+     }
+     .email-input {
+          max-width: 100%;
+          position: relative;
+          bottom: 50px;
+     }
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .logo-container img {
+          width: 15%;
+     }
+
+     .on-the-gram p {
+          display: none;
+     }
+     .follow-us {
+          display: flex !important;
+          align-items: center;
+     }
+
+     .on-the-gram {
+          display: table;
+          margin: 0 auto;
+     }
+}

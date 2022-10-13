@@ -1,0 +1,112 @@
+/* div{
+} */
+
+.login-container {
+     background: linear-gradient(
+               rgba(255, 255, 255, 0.2),
+               rgba(255, 255, 255, 0.5)
+          ),
+          url("login-background.svg");
+          background-size: contain;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          gap: 20px;
+          position: relative;
+}
+
+.login-form {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+}
+
+.login-header{
+     text-align: center;
+     /* position: absolute; */
+     
+ 
+
+}
+
+.login {
+     border: none;
+     width: 300px;
+     border-radius: 10px;
+     outline: none;
+     padding: 10px;
+}
+
+.login:focus {
+     outline: 2px solid #527df3;
+}
+
+.login-text {
+     margin-bottom: 10px;
+}
+
+/* .register_btn:hover::after,
+.register_btn:focus::after {
+     opacity: 0 !important;
+     transform: none !important;
+     background-color: none !important;
+} */
+
+.login_btn {
+     border: none;
+     width: 100px;
+     border-radius: 10px;
+     outline: none;
+     outline-color: orangered;
+     background-color: #527df3;
+     padding: 10px;
+     cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.login_register-conttainer {
+     display: flex;
+     justify-content: end;
+     position: absolute;
+     right: 0;
+     top: 0;
+     margin: 40px;
+}
+
+.login_register {
+     border: none;
+     border-bottom: 2px solid orangered;
+     padding: 10px 30px;
+     border-radius: 10px;
+     font-size: 15px;
+     cursor: pointer;
+     display: flex;
+     
+}
+
+.login_register_text:hover::after,
+.login_register_text:focus::after {
+     opacity: 0 !important;
+}
+
+.login_btn:active {
+     border: none;
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .login {
+          width: 100%;
+     }
+
+     .login_register-conttainer {
+     display: flex;
+     justify-content: end;
+     position: absolute;
+     right: 0;
+     top: 0;
+     margin: 20px;
+}
+}

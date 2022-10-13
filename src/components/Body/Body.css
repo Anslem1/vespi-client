@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+*,
+*::before,
+*::after {
+     padding: 0;
+     margin: 0;
+}
+
+.content-container {
+     height: 100vh;
+}
+
+/* .intro-text-container {
+     justify-content: center;
+     margin-top: 84px;
+     display: grid;
+} */
+
+.intro-text {
+     font-weight: 400;
+     margin-bottom: 50px;
+     text-align: center;
+     margin-top: 84px;
+}
+
+.body-container {
+     display: grid;
+     grid-template-columns: 1fr repeat(1, minmax(auto, 2fr)) 1fr;
+     justify-items: center;
+     margin: 30px;
+}
+
+.image {
+     width: 100%;
+}
+
+.image-text {
+     margin-top: 30px;
+     overflow-wrap: break-word;
+     font-family: Bodoni Moda;
+}
+
+.italic {
+     text-align: center;
+     font-family: lora;
+     font-size: 26px !important;
+     font-weight: 400;
+     margin-bottom: 30px;
+     color: black !important;
+}
+
+.posted-under-container p {
+     color: #606060;
+     margin-top: 25px;
+     font-size: 17px;
+}
+
+.posted-under {
+     margin-top: 30px;
+     margin-bottom: 100px;
+     font-weight: 400;
+     font-family: Lato;
+     font-size: 14px;
+}
+
+.under {
+     border: 1px solid;
+     padding: 3px 15px;
+     margin: 10px;
+}
+
+@media screen and (max-width: 1300px) {
+     .body-container {
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+     }
+
+     .image-container {
+          width: 90%;
+     }
+     .posted-under {
+          margin-bottom: 30px;
+     }
+
+     .italic {
+          text-align: center;
+          font-family: Nunito Sans;
+     }
+
+     .image-container:nth-last-of-type(2) p {
+          font-size: 20px;
+     }
+}
+
+@media screen and (min-width: 709px) and (max-width: 859.5px) {
+     .body-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+     .image-p {
+          inline-size: 400px;
+     }
+
+     .italic {
+          text-align: start;
+          font-family: Nunito Sans;
+     }
+
+     .image-container {
+          width: 100%;
+     }
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .body-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+     }
+}

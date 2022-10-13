@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+.post__text {
+     text-align: center;
+     margin-top: 50px;
+     margin-bottom: 80px;
+}
+
+.post__image {
+     width: 450px;
+     height: 600px;
+}
+.post__icon {
+     font-size: 30px;
+}
+
+.form-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     position: relative;
+     margin-bottom: 80px;
+}
+
+.card__container {
+     display: flex;
+}
+
+.file__imput {
+     display: none;
+}
+
+.input__container {
+     /* border: 1px solid; */
+     justify-content: center;
+     display: flex;
+     flex-direction: column;
+     margin: 50px;
+     gap: 20px;
+}
+
+.text__input {
+     color: black !important;
+     resize: none;
+     border: none;
+     outline: none;
+     border-bottom: 3px solid #666;
+     height: 40px;
+     font-size: 30px;
+     margin-bottom: 10px;
+     /* font-family: "inter", sans-serif; */
+}
+
+.text__input::-webkit-scrollbar {
+     width: 0px;
+}
+
+.text__input:focus {
+     border-bottom-color: black;
+}
+
+.text__area {
+     outline: none;
+     border-radius: 10px;
+     border: 2px solid transparent;
+     background-color: #ddd;
+     padding: 1em;
+     line-height: 1.4;
+     resize: none;
+     width: 330px;
+     margin-bottom: 10px;
+     font-size: 15px;
+}
+
+.text__area::-webkit-scrollbar {
+     width: 0px;
+}
+
+.text__area:focus {
+     border-color: black;
+}
+
+.button {
+     border: none;
+     cursor: pointer;
+     padding: 10px 40px;
+     border-radius: 10px;
+     font-size: 15px;
+     background-color: orangered;
+}
+
+.form-select {
+     cursor: pointer;
+}
+
+.select-container {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     gap: 30px;
+}
+
+.form-label {
+     font-size: 20px;
+     font-family: Inter, sans-serif;
+}
+
+.form-select {
+     margin: 10px;
+     width: 150px;
+     height: 35px;
+     font-size: 15px;
+     border-radius: 10px;
+}
+
+@media screen and (max-width: 1300px) {
+     .card__container {
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+     }
+
+     .post__image {
+          width: 70%;
+          height: 80%;
+     }
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .input__container {
+          width: 80%;
+     }
+
+     .post__image {
+          width: 80%;
+     }
+
+     .text__input {
+          font-size: 20px;
+     }
+
+     .text__area {
+          width: 80%;
+     }
+
+     .text__input {
+          width: 90%;
+     }
+}

@@ -1,0 +1,37 @@
+.about-us-header {
+     font-family: Lato;
+     text-align: center;
+     margin-top: 30px;
+     font-weight: 400;
+     margin-bottom: 30px;
+}
+
+.about-container {
+     display: flex;
+     justify-content: space-around;
+}
+.about-vespi {
+     text-align: center;
+     font-family: Nunito Sans;
+     font-size: 20px;
+}
+
+.functions {
+     text-decoration: underline;
+}
+
+.by {
+     margin-top: 50px;
+     text-align: center;
+     font-family: Lato;
+     font-size: 20px;
+     text-decoration: overline;
+     color: rgb(81, 0, 255);
+}
+
+@media screen and (max-width: 1300px) {
+    .about-container{
+        flex-direction: column;
+        
+    }
+}

@@ -1,0 +1,89 @@
+.register-container {
+     background: linear-gradient(
+               rgba(255, 255, 255, 0.5),
+               rgba(255, 255, 255, 0.2)
+          ),
+          url("https://i.guim.co.uk/img/media/71f8a35e97855fc60afdcab3c2aa578b4ff9d72b/0_0_8192_5464/master/8192.jpg?width=1300&quality=85&fit=max&s=91ac232f26fc2771ae84f51c3946360a");
+     background-size: cover;
+     display: flex;
+     height: 100vh;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     gap: 20px;
+}
+
+.register-header {
+     top: 100px;
+     /* position: absolute; */
+     text-align: center;
+     left: 0;
+     right: 0;
+}
+.register-details {
+     display: flex;
+     flex-direction: column;
+}
+
+.register-details button {
+     width: 110px;
+}
+
+.register-details h3 {
+     margin-bottom: 10px;
+     font-family: lato, sans-serif;
+     font-weight: 400;
+}
+
+.register {
+     border: none;
+     width: 300px;
+     border-radius: 10px;
+     outline: none;
+     padding: 10px;
+}
+
+.register:focus {
+     outline: 2px solid #527df3;
+}
+
+.register_btn {
+     border: none;
+     border-bottom: 2px solid orangered;
+     padding: 10px 30px;
+     border-radius: 10px;
+     font-size: 15px;
+     cursor: pointer;
+}
+.register_btn:hover::after,
+.register_btn:focus::after {
+     opacity: 0 !important;
+}
+
+.register_btn:active {
+     border-bottom: none;
+}
+
+.register_password {
+     margin-bottom: 20px;
+}
+
+.error{
+     font-size: 25px;
+     color: rgb(255, 0, 132);
+     margin-bottom: 20px;
+}
+
+.loading_screen{
+     display: flex;
+     width: 100%;
+     height: 100vh;
+     justify-content: center;
+     align-items: center;
+}
+
+@media screen and (min-width: 0px) and (max-width: 440px) {
+     .register {
+          width: 100%;
+     }
+}
