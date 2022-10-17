@@ -32,35 +32,6 @@ export default function (state = initialState, action) {
       }
       break
     }
-    case registerConstants.USER_REGISTER_FAILURE: {
-      state = {
-        ...state,
-        registering: false,
-        registered: false,
-        error: action.payload.error
-      }
-      break
-    }
-
-    case deleteUserConstant.DELETE_USER_REQUEST: {
-      state = {
-        ...state,
-        deletingAccount: true,
-        deletedAccount: false
-      }
-    }
-    case deleteUserConstant.DELETE_USER_sSUCCESS: {
-      state = { ...initialState, deletingAccount: false, deletedAccount: true }
-      break
-    }
-    case deleteUserConstant.DELETE_USER_FAILURE: {
-      state = {
-        ...state,
-        deletedAccount: false,
-        deletedAccount: false
-      }
-      break;
-    }
   }
 
   return state

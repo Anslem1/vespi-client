@@ -64,11 +64,11 @@ hr {
 
 .on-the-gram p {
      margin-top: 90px;
-     text-transform: uppercase;
      padding: 10px 25px;
      font-size: 15px;
      font-family: Roboto;
      font-weight: 600;
+     font-size: 20px;
 }
 
 .instagram {
@@ -82,7 +82,7 @@ hr {
 
 .follow-us {
      border: 1.5px solid;
-     font-size: 10px !important;
+     font-size: 15px !important;
      font-family: Lato !important;
 }
 

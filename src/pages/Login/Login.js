@@ -18,15 +18,18 @@ function Login () {
   //     dispatch(isUserLoggedin())
   //   }
   // }, [])
-
   function UserLogin (e) {
-    e.preventDefault()
-    const user = {
-      username,
-      password
+      try {
+      e.preventDefault()
+      const user = {
+        username,
+        password
+      }
+      dispatch(LoginUser(user))
+    } catch (error) {
+      setError(true)
     }
-    dispatch(LoginUser(user))
-  }
+    }
 
   if (auth.authenticate) {
     return <Navigate replace={true} to='/' />
@@ -65,6 +68,7 @@ function Login () {
           </div>
           <button className='login_btn'>Login</button>
         </form>
+        {error && <h3 className='error'>Wrong unsername or password</h3>}
       </div>
     </>
   )

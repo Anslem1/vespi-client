@@ -20,15 +20,18 @@ function Singlejournal () {
   const [caption, setCaption] = useState('')
   const [categoryName, setCategoryName] = useState('')
   const [desc, setDesc] = useState('')
+  const [id, setId] = useState('')
   const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     async function getJournal () {
       const res = await axios.get('/journals/' + path)
+      console.log(res)
       setJournal(res.data)
       setCaption(res.data.caption)
       setDesc(res.data.desc)
       setCategoryName(res.data.category.name)
+      setId(res.data._id)
       console.log(res.data.category.name)
     }
 
@@ -93,7 +96,7 @@ function Singlejournal () {
     <>
       <div className='post-wrapper'>
         <div className='post-details'>
-          <Link to='/journals' className='link'>
+          <Link to='/journals' className='link back-to-journal'>
             <i className='fa-solid fa-arrow-left-long'></i>Back to Journals
           </Link>
 
@@ -101,7 +104,6 @@ function Singlejournal () {
             Posted under <span className='trends'>{categoryName}</span>
           </p>
           <div className='time'>
-            <p className='date'>{date}</p>
             <p className='posted-on'>
               Posted on {new Date(journal.createdAt).toDateString()}
             </p>
@@ -120,14 +122,6 @@ function Singlejournal () {
                 <i className='fa-solid fa-envelope'></i>
               </div>
               <div className='h1-text'>
-                {journal.postImage && (
-                  <img
-                    src={PF + journal.postImage}
-                    // src='https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dmlzaW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'
-                    alt=''
-                    className='article_img'
-                  />
-                )}
                 {update ? (
                   <input
                     type='text'
@@ -145,6 +139,13 @@ function Singlejournal () {
                 >
                   <p className='written__by'>Written by {journal.username}</p>
                 </Link>
+                {journal.postImage && (
+                  <img
+                    src={PF + journal.postImage}
+                    alt=''
+                    className='article_img'
+                  />
+                )}
                 {journal.username === auth.userCreds?.username && (
                   <div className='edit-delete'>
                     <i
@@ -157,36 +158,46 @@ function Singlejournal () {
                     ></i>
                   </div>
                 )}
+                {update ? (
+                  <input
+                    type='text'
+                    value={desc}
+                    className='text__input'
+                    onChange={e => setDesc(e.target.value)}
+                  />
+                ) : (
+                  <p className='post-text'>{journal.desc}</p>
+                )}
               </div>
 
               <div className='related-article'>
-                <Link to={`/journalarticle/${article._id}`} className='link'>
-                  {article.postImage && (
-                    <img
-                      src={PF + article.postImage}
-                      alt=''
-                      // className='article_img'
-                    />
-                  )}
+                <h3 className='h3'>related articles</h3>
+                {id === article._id ? (
+                  ''
+                ) : (
+                  <>
+                    <Link
+                      to={`/journalarticle/${article._id}`}
+                      className='link'
+                    >
+                      {article.postImage && (
+                        <img
+                          src={PF + article.postImage}
+                          alt=''
+                          className='article__img'
+                        />
+                      )}
 
-                  <h5>{article.caption}</h5>
-                  <p>{article.desc}</p>
-                </Link>
+                      <h5>{article.caption}</h5>
+                      <p>{article.desc}</p>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
 
             {journal.photo && (
               <img src={PF + journal.photo} alt='' className='post-image' />
-            )}
-            {update ? (
-              <input
-                type='text'
-                value={desc}
-                className='text__input'
-                onChange={e => setDesc(e.target.value)}
-              />
-            ) : (
-              <p className='post-text'>{journal.desc}</p>
             )}
             {update && (
               <button className='updatw_post' onClick={handleUpdate}>
@@ -194,60 +205,41 @@ function Singlejournal () {
               </button>
             )}
           </div>
-          <h4 className='post-quote'>
-            “Apart from materials, fit is everything when it comes to well made
-            clothing”
-          </h4>
         </div>
-        <div className='sub-content'>
-          <h2>Shapes change with the times</h2>
-          <p>
-            Fuas molestias excepturi sint occaecati cupiditate non provident,
-            similique sunt in culpa qui officia deserunt mollitia animi, id est
-            laborum et dolorum fuga. Et harum quidem rerum facilis est et
-            expedita distinctio. Nam libero tempore, cum soluta nobis est
-            eligendi optio cumque nihil impedit quo minus id quod maxime placeat
-            facere possimus, omnis voluptas assumenda est, omnis dolor
-            repellendus. Temporibus autem quibusdam et aut officiis debitis aut
-            rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint
-            et molestiae non recusandae. Itaque earum rerum hic tenetur a
-            sapiente delectus, ut aut reiciendis voluptatibus maiores alias
-            consequatur aut perferendis doloribus asperiores repellat. Nam
-            libero tempore, cum soluta nobis est eligendi optio cumque nihil
-            impedit quo minus id quod maxime placeat facere possimus, omnis
-            voluptas assumenda est, omnis dolor repellendus. Temporibus autem
-            quibusdam et aut officiis debitis aut rerum necessitatibus.
-          </p>
-          <div className='hr'></div>
-        </div>
-        <div className='other-stories'>
-          <Link to={`/journalarticle/${prevStory._id}`} className='link'>
-            <div className='story-1'>
-              {prevStory.postImage && (
-                <img src={PF + prevStory.postImage} alt='' />
-              )}
 
-              <div className='prev-story-container'>
-                <h6 className='prev-stories'>Previous Story</h6>
-                <p>{prevStory.caption}</p>
+        <div className='other-stories'>
+          {id === prevStory._id ? (
+            ''
+          ) : (
+            <Link to={`/journalarticle/${prevStory._id}`} className='link'>
+              <div className='story-1'>
+                {prevStory.postImage && (
+                  <img src={PF + prevStory.postImage} alt='' />
+                )}
+
+                <div className='prev-story-container'>
+                  <h6 className='prev-stories'>Previous Story</h6>
+                  <p>{prevStory.caption}</p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
           <p className='comments'>12 comments +</p>
-          <Link to={`/journalarticle/${nextStory._id}`} className='link'>
-            <div className='story-2'>
-              {nextStory.postImage && (
-                <img src={PF + nextStory.postImage} alt='' />
-              )}
-              <div
-                className='next-story-container
-'
-              >
-                <h6 className='next-story'>Next Story</h6>
-                <p>{article.caption}</p>
+          {id === nextStory._id ? (
+            ''
+          ) : (
+            <Link to={`/journalarticle/${nextStory._id}`} className='link'>
+              <div className='story-2'>
+                {nextStory.postImage && (
+                  <img src={PF + nextStory.postImage} alt='' />
+                )}
+                <div className='next-story-container'>
+                  <h6 className='next-story'>Next Story</h6>
+                  <p>{article.caption}</p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
         </div>
 
         <h1 className='related-stories-text'>Related Stories</h1>
@@ -276,7 +268,7 @@ function Singlejournal () {
             </Link>
           </div>
 
-          <div className='related-stories -4'>
+          <div className='related-stories-4'>
             <Link to='/' className='link'>
               <img src={bodyData[5].image} alt='' />
               <h2>{bodyData[5].heading}</h2>

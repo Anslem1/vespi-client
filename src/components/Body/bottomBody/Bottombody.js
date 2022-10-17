@@ -31,7 +31,7 @@ function bodyQuoteEmail () {
       <div className='on-the-gram'>
         <p>On the gram</p>
         <p className='follow-us'>
-          Follow Us on the gram
+          Follow us on the gram
           <i className='fa-brands instagram fa-instagram'></i>
         </p>
       </div>

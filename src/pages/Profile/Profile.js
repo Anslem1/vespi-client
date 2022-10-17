@@ -74,19 +74,7 @@ function Profile () {
     }
   }
 
-  async function deleteAccount (e) {
-    setId(auth.userCreds._id)
-    e.preventDefault()
-    console.log(id)
-    const deleteUser = {
-      id
-    }
-    const data = new FormData()
-    data.append('id', id)
-    const res = await axios.delete(`/users/${id}`, { deleteUser })
-    console.log(res)
-    dispatch(deleteUserAccount(deleteUser))
-  }
+
 
   // console.log(auth)
 
@@ -174,15 +162,8 @@ function Profile () {
         {error && <h3 className='error'>Something went wrong</h3>}
       </form>
 
-      <form action='' onSubmit={deleteAccount}>
-        <button
-          className='delete_profile_btn'
-          type='submit'
-          onClick={deleteAccount}
-        >
-          Delete account
-        </button>
-      </form>
+   
+    
 
       <Footer />
     </>

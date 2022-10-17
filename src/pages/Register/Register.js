@@ -11,7 +11,7 @@ function Register () {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -19,18 +19,16 @@ function Register () {
     e.preventDefault()
     // setError(fase)
 
+    const user = {
+      username,
+      email,
+      password
+    }
     try {
-      const user = {
-        username,
-        email,
-        password
-      }
-
       dispatch(register(user))
       window.location.replace('/login')
-
     } catch (err) {
-      setError(err)
+      setError(true)
     }
   }
 
