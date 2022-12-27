@@ -1,37 +1,41 @@
-import { deleteUserConstant, registerConstants } from '../../Actions/constants'
+import {
+  deleteUserConstant,
+  registerConstants,
+  updateUserConstant
+} from '../../Actions/constants'
 
 const initialState = {
   error: null,
-
   email: '',
   username: '',
   password: '',
-
   registering: false,
-  registered: false,
-  deletingAccount: false,
-  deletedAccount: false
+  deletingAccount: false
 }
 
 export default function (state = initialState, action) {
+  console.log(action)
   switch (action.type) {
-    case registerConstants.USER_REGISTER_REQUEST: {
+    case registerConstants.USER_REGISTER_REQUEST:
       state = {
         ...state,
-        registering: true,
-        registered: false
+        registering: true
       }
       break
-    }
-    case registerConstants.USER_REGISTER_SUCCESS: {
+    case registerConstants.USER_REGISTER_SUCCESS:
       state = {
         ...state,
-        data: action.payload.data,
-        registered: true,
+        registering: false,
+        data: action.payload.data
+      }
+      break
+    case registerConstants.USER_REGISTER_FAILURE:
+      state = {
+        ...state,
+        error: action.payload.error,
         registering: false
       }
       break
-    }
   }
 
   return state

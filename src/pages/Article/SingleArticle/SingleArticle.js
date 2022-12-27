@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react'
 import bodyData from '../../../components/Body/bodyData'
 import './Singlepost.css'
 import Emailus from '../../../components/Body/bottomBody/email-us/email-us'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import axios from '../../../Redux/helpers/axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getInitialData, getPost } from '../../../Redux/Actions'
 
 function Singlejournal () {
-  const date = new Date().toDateString()
   const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const location = useLocation()
   const path = location.pathname.split('/')[2]
@@ -25,23 +27,23 @@ function Singlejournal () {
 
   useEffect(() => {
     async function getJournal () {
-      const res = await axios.get('/journals/' + path)
-      console.log(res)
+      const res = await axios.get('/journals/get/' + path)
+
       setJournal(res.data)
       setCaption(res.data.caption)
       setDesc(res.data.desc)
       setCategoryName(res.data.category.name)
       setId(res.data._id)
-      console.log(res.data.category.name)
     }
 
     getJournal()
   }, [path])
 
   const { search } = useLocation()
+
   useEffect(() => {
     async function fetchJournal () {
-      const res = await axios.get('/journals' + search)
+      const res = await axios.get('/journals/get/' + search)
       const random = Math.floor(Math.random() * res.data.length)
       setArticle(res.data[random])
     }
@@ -51,7 +53,7 @@ function Singlejournal () {
 
   useEffect(() => {
     async function nextStoryFunc () {
-      const res = await axios.get('/journals' + search)
+      const res = await axios.get('/journals/get/' + search)
       const random = Math.floor(Math.random() * res.data.length)
       setNextStory(res.data[random])
     }
@@ -60,7 +62,7 @@ function Singlejournal () {
   }, [search])
   useEffect(() => {
     async function prevStoryFunc () {
-      const res = await axios.get('/journals' + search)
+      const res = await axios.get('/journals/get/' + search)
       const random = Math.floor(Math.random() * res.data.length)
       setPrevStory(res.data[random])
     }
@@ -68,27 +70,33 @@ function Singlejournal () {
     prevStoryFunc()
   }, [search])
 
-  const PF = 'http://localhost:5000/images/'
-
   async function handleDelete () {
     try {
-      await axios.delete('/journals/' + path, {
+      const res = await axios.delete('/journals/delete/' + path, {
         data: {
           username: auth.userCreds.username
         }
       })
-      window.location.replace('/journals')
+      if (res.status(200)) {
+        navigate('/journals')
+        dispatch(getInitialData())
+      }
     } catch (error) {}
   }
 
   async function handleUpdate () {
     try {
-      await axios.put('/journals/' + path, {
+      const res = await axios.put('/journals/update/' + path, {
         username: auth.userCreds.username,
         caption,
         desc
       })
-      window.location.reload()
+  
+      if (res.status === 200) {
+        navigate('/journals')
+        window.location.reload()
+        dispatch(getInitialData())
+      }
     } catch (error) {}
   }
 
@@ -140,11 +148,7 @@ function Singlejournal () {
                   <p className='written__by'>Written by {journal.username}</p>
                 </Link>
                 {journal.postImage && (
-                  <img
-                    src={PF + journal.postImage}
-                    alt=''
-                    className='article_img'
-                  />
+                  <img src={journal.postImage} alt='' className='article_img' />
                 )}
                 {journal.username === auth.userCreds?.username && (
                   <div className='edit-delete'>
@@ -182,7 +186,7 @@ function Singlejournal () {
                     >
                       {article.postImage && (
                         <img
-                          src={PF + article.postImage}
+                          src={article.postImage}
                           alt=''
                           className='article__img'
                         />
@@ -197,7 +201,7 @@ function Singlejournal () {
             </div>
 
             {journal.photo && (
-              <img src={PF + journal.photo} alt='' className='post-image' />
+              <img src={journal.photo} alt='' className='post-image' />
             )}
             {update && (
               <button className='updatw_post' onClick={handleUpdate}>
@@ -214,7 +218,7 @@ function Singlejournal () {
             <Link to={`/journalarticle/${prevStory._id}`} className='link'>
               <div className='story-1'>
                 {prevStory.postImage && (
-                  <img src={PF + prevStory.postImage} alt='' />
+                  <img src={prevStory.postImage} alt='' />
                 )}
 
                 <div className='prev-story-container'>
@@ -231,7 +235,7 @@ function Singlejournal () {
             <Link to={`/journalarticle/${nextStory._id}`} className='link'>
               <div className='story-2'>
                 {nextStory.postImage && (
-                  <img src={PF + nextStory.postImage} alt='' />
+                  <img src={nextStory.postImage} alt='' />
                 )}
                 <div className='next-story-container'>
                   <h6 className='next-story'>Next Story</h6>

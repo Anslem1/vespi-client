@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 function Navlinks () {
   const auth = useSelector(state => state.auth)
   const userCreds = localStorage.getItem('userCreds')
-  const PF = 'http://localhost:5000/images/'
 
   return (
     <nav className='navbar-container'>
@@ -31,24 +30,25 @@ function Navlinks () {
           <Link to='/journals'>Journal</Link>
         </li>
         <li>
-          <a href='/aboutus'>About us</a>
+          <Link to='/aboutus'>About us</Link>
         </li>
       </ul>
       <ul className='login-search'>
         <li>
           {userCreds === null ? (
-            <li className='login-register'>
+            <ul className='login-register'>
               <li>
                 <Link to='/register'>Register</Link>
               </li>
               <Link to='/login'>Login</Link>
-            </li>
+            </ul>
           ) : (
             <Link to='/profile' className='link'>
-              {auth.userCreds.profilePicture ? (
+              {auth.userCreds.profilePicture &&
+              auth.userCreds.profilePicture ? (
                 <img
                   className='profile-picture'
-                  src={PF + auth.userCreds.profilePicture}
+                  src={auth.userCreds.profilePicture}
                   alt=''
                 />
               ) : (

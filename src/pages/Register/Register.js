@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+
 import { Navigate } from 'react-router-dom'
 import './Register.css'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../Redux/Actions'
 // import { isUserLoggedin } from '../../Redux/Actions'
@@ -13,11 +12,11 @@ function Register () {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const auth = useSelector(state => state.auth)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   async function UserRegister (e) {
     e.preventDefault()
-    // setError(fase)
 
     const user = {
       username,
@@ -26,7 +25,7 @@ function Register () {
     }
     try {
       dispatch(register(user))
-      window.location.replace('/login')
+      // window.location.replace('/login')
     } catch (err) {
       setError(true)
     }
@@ -77,7 +76,7 @@ function Register () {
           />
           <button className='register_btn'>Register</button>
         </div>
-        {error && <h3 className='error'>Usenanme or email already exists</h3>}
+        {user.error && <h3 className='error'>{user.error}</h3>}
       </form>
     </>
   )

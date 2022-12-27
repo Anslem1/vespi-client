@@ -11,19 +11,22 @@ import Register from './pages/Register/Register'
 import Login from './pages/Login/Login'
 import Aboutus from './pages/AboutUs/Aboutus'
 import { useEffect } from 'react'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategory, getInitialData, isUserLoggedin } from './Redux/Actions'
+import { getInitialData, isUserLoggedin } from './Redux/Actions'
 function App () {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
 
   useEffect(() => {
     if (!auth.authenticate) dispatch(isUserLoggedin())
-    dispatch(getCategory())
+  }, [auth.authenticate])
+  useEffect(() => {
     dispatch(getInitialData())
   }, [])
+  const token = localStorage.getItem('token')
 
   return (
     <>
@@ -34,9 +37,9 @@ function App () {
         <Route path='/women' element={<Women />} />
         <Route path='/journals' element={<Journals />} />
         <Route path='/post' element={<RenderPost />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/register' element={token ? <Home /> : <Register />} />
+        <Route path='/login' element={token ? <Home /> : <Login />} />
+        <Route path='/profile' element={token ? <Profile /> : <Login />} />
         <Route
           path='/journalarticle/:journalarticleId'
           element={<JournalArticle />}

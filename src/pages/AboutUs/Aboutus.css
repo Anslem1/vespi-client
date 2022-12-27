@@ -1,7 +1,11 @@
+.about-container > div {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
 .about-us-header {
      font-family: Lato;
      text-align: center;
-     margin-top: 30px;
      font-weight: 400;
      margin-bottom: 30px;
 }
@@ -11,13 +15,11 @@
      justify-content: space-around;
 }
 .about-vespi {
+     margin-top: 30px;
      text-align: center;
      font-family: Nunito Sans;
      font-size: 20px;
-}
-
-.functions {
-     text-decoration: underline;
+     inline-size: 70%;
 }
 
 .by {
@@ -30,8 +32,4 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .about-container{
-        flex-direction: column;
-        
-    }
 }

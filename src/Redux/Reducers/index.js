@@ -1,7 +1,3 @@
-// export default function (state = { name: "anslem" }, action) {
-//     return state
-// }
-
 import { combineReducers } from 'redux'
 import authReducer from './Auth/AuthReducer'
 import userReducer from './User/UserReducer'

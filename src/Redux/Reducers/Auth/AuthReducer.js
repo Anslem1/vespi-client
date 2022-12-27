@@ -1,5 +1,5 @@
 // import { authConstant } from '../actions/constants'
-import { authConstant } from '../../Actions/constants'
+import { authConstant, updateUserConstant } from '../../Actions/constants'
 
 const initialState = {
   token: null,
@@ -8,16 +8,15 @@ const initialState = {
     email: '',
     profilePicture: ''
   },
+  loading: false,
   authenticate: false,
   authenticating: false,
   loggingOut: false,
-  loggedOut: false,
   error: null,
-  message: ''
+  message: null
 }
 
 export default function (state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case authConstant.LOGIN_REQUEST:
       state = {
@@ -34,7 +33,36 @@ export default function (state = initialState, action) {
         authenticating: false
       }
       break
-
+    case authConstant.LOGIN_FAILURE:
+      state = {
+        ...state,
+        error: action.payload.error,
+        authenticate: false,
+        authenticating: false
+      }
+      break
+    case updateUserConstant.UPDATE_USER_REQUEST:
+      state = {
+        ...state,
+        loading: true
+      }
+      break
+    case updateUserConstant.UPDATE_USER_SUCCESS:
+      state = {
+        ...state,
+        userCreds: action.payload.userCreds,
+        message: action.payload.message,
+        loading: false
+      }
+      break
+    case updateUserConstant.UPDATE_USER_FAILURE:
+    
+      state = {
+        ...state,
+        error: action.payload.error,
+        loading: false
+      }
+      break
     case authConstant.LOGOUT_REQUEST: {
       state = {
         ...state,
@@ -45,8 +73,7 @@ export default function (state = initialState, action) {
     case authConstant.LOGOUT_SUCCESS: {
       state = {
         ...initialState,
-        loggingOut: false,
-        loggedOut: true
+        loggingOut: false
       }
       break
     }
@@ -54,13 +81,11 @@ export default function (state = initialState, action) {
       state = {
         ...state,
         error: action.payload.error,
-        loggingOut: false,
-        loggedOut: false
+        loggingOut: false
       }
       break
     }
   }
-  
 
   return state
 }

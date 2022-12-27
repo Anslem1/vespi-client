@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Post.css'
 import Footer from '../../../components/Footer/Footer'
 import TextareaAutosize from 'react-textarea-autosize'
 import { useSelector } from 'react-redux'
 import { getCategory } from '../../../Redux/Actions'
-import { nanoid } from 'nanoid'
 
 import { useDispatch } from 'react-redux'
 import { createPost } from '../../../Redux/Actions/PostActions'
-import axios from '../../../Redux/helpers/axios'
+import { useNavigate } from 'react-router-dom'
 
 function Post () {
   const dispatch = useDispatch()
   const category = useSelector(state => state.category)
   const auth = useSelector(state => state.auth)
 
-  const [username, setUsername] = useState('')
-  const [error, setError] = useState(false)
   const [caption, setCaption] = useState('')
   const [postImage, setPostImage] = useState(null)
   const [desc, setDesc] = useState('')
   const [postCategoryId, setPostCategoryId] = useState('')
+  const buttonRef = useRef()
+  const navigate = useNavigate()
 
   function createMenCategoryLabel (categories, options = []) {
     for (let category of categories) {
@@ -36,10 +35,17 @@ function Post () {
     return options[1]
   }
 
-
   useEffect(() => {
     dispatch(getCategory())
   }, [])
+
+  const disableButton = () => {
+    if (!desc || !caption || !postImage || !postCategoryId) {
+      buttonRef.current.disabled = true
+    } else {
+      buttonRef.current.disabled = false
+    }
+  }
 
   function createMenCategoryOptions (categories, options = []) {
     for (let category of categories) {
@@ -77,51 +83,29 @@ function Post () {
 
   function handlePostImage (e) {
     setPostImage(e.target.files[0])
-    console.log(e.target.files[0])
   }
 
-  async function submitPost (e) {
-    e.preventDefault()
-    try {
-      const post = {
-        username: auth.userCreds.username,
-        caption,
-        desc,
-        postImage,
-        category: postCategoryId
-      }
-      if (postImage) {
-        const data = new FormData()
-        const filename = nanoid() + postImage.name
-        data.append('file', filename)
-        data.append('file', postImage)
-        post.postImage = filename
-        try {
-          await axios.post('/upload', data)
-        } catch (err) {
-          setError(true)
-        }
-      }
-      dispatch(createPost(post))
-      setError(false)
-      error === false && window.location.replace('/journals')
-    } catch (err) {
-      setError(true)
-      console.log(error === true)
-    }
+  function submitPost () {
+    const form = new FormData()
+    form.append('username', auth.userCreds.username)
+    form.append('postImage', postImage)
+    form.append('caption', caption)
+    form.append('desc', desc)
+    form.append('category', postCategoryId)
 
+    dispatch(createPost(form, navigate))
+ 
   }
 
   return (
     <>
       <h1 className='post__text'>Add to journal</h1>
-      <form action='' className='form-container' onSubmit={submitPost}>
+      <main action='' className='form-container'>
         <div className='card__container'>
           {postImage && (
             <img
-              // src='https://assets.vogue.com/photos/62a64eec88b88c58f7d6b94a/master/w_3000,h_4498,c_limit/london-mens-fashion-week-ss23-street-style-acielle-styledumonde-day2-003.jpg'
               src={window.URL.createObjectURL(postImage)}
-              alt=''
+              alt='postimage'
               className='post__image'
             />
           )}
@@ -132,10 +116,11 @@ function Post () {
             <input
               type='file'
               // name={postImage}
-              name='file'
               id='fileInput'
+              name='postImage'
               className='file__imput'
               onChange={handlePostImage}
+              required
             />
             <TextareaAutosize
               className='text__input'
@@ -153,10 +138,16 @@ function Post () {
                 className='text__area'
                 value={desc}
                 onChange={e => setDesc(e.target.value)}
-                required
+                required='true'
               />
               <div className='button__container'>
-                <button className='button'>Post</button>
+                <button
+                  className={`button disabled`}
+                  onClick={submitPost}
+                  disabled={!desc || !caption || !postImage || !postCategoryId}
+                >
+                  Post
+                </button>
               </div>
             </div>
           </div>
@@ -166,7 +157,6 @@ function Post () {
                 {createMenCategoryLabel(category.categories)}
               </label>
 
-              {/* onChange={e => setParentCategoryId(e.target.value)} */}
               <select
                 className='form-select'
                 name=''
@@ -184,8 +174,6 @@ function Post () {
               </label>
               <select
                 className='form-select'
-                name=''
-                id=''
                 value={postCategoryId}
                 onChange={e => setPostCategoryId(e.target.value)}
               >
@@ -195,8 +183,12 @@ function Post () {
             </div>
           </div>
         </div>
-        {error && <h3 className='error'>Please fill all field</h3>}
-      </form>
+        {(!desc || !caption || !postImage || !postCategoryId) && (
+          <h3 className='error' style={{ marginTop: '40px' }}>
+            Please fill all field
+          </h3>
+        )}
+      </main>
       <Footer />
     </>
   )

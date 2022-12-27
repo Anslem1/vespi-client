@@ -4,21 +4,13 @@ import './Aboutus.css'
 function Aboutus () {
   return (
     <>
-      <h1 className='about-us-header'>Vespi</h1>
-      <p className='about-vespi'>Vespi is a fashion blog application</p>
       <div className='about-container'>
         <div>
-          <h2 className='about-us-header functions'>Functionalities</h2>
-          <p className='about-us-header '>User can register</p>
-          <p className='about-us-header'>
-            User can get registered data from the database to login
-          </p>
-          <p className='about-us-header '>User can edit profile</p>
-          <p className='about-us-header '>Users can create posts</p>
-          <p className='about-us-header '>Users can edit posts</p>
-          <p className='about-us-header '>Users can delete posts</p>
-          <p className='about-us-header '>
-            Users can get posts by a particular user
+          <p className='about-vespi'>
+            <strong>Vespi</strong> is a fasion blog application where users can
+            create account, update account, delete account. Users can also make
+            posts, edit posts, post by a category, delete nad update their
+            posts. Users cannot edit or delete other users account or posts.
           </p>
         </div>
       </div>

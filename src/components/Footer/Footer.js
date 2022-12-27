@@ -7,23 +7,11 @@ import './Footer.css'
 import axios from 'axios'
 
 function Footer () {
-  // const [category, setCategory] = useState([])
-
-  // useEffect(() => {
-  //   async function getCategory () {
-  //     const res = await axios.get('/categories')
-  //     setCategory(res.data)
-  //   }
-  //   getCategory()
-  // }, [])
-
   const footerProdElement = footerProducts.map(footerProduct => {
     return (
       <>
-        <ul className='product-ul'>
-          <h6 key={footerProduct.productCategory}>
-            {footerProduct.productCategory}
-          </h6>
+        <ul className='product-ul' key={footerProduct.productCategory}>
+          <h6>{footerProduct.productCategory}</h6>
           {footerProduct.products.map(product => {
             return (
               <Link
@@ -43,8 +31,8 @@ function Footer () {
   const footerLocationElement = footerLocations.map(footerLocation => {
     return (
       <>
-        <ul className='store-location'>
-          <h6 key={footerLocation.store}>{footerLocation.store}</h6>
+        <ul className='store-location' key={footerLocation.store}>
+          <h6>{footerLocation.store}</h6>
           {footerLocation.location}
         </ul>
       </>
@@ -90,8 +78,8 @@ function Footer () {
             <i className='fa-brands fa-snapchat'></i>
           </div>
           <p className='rights'>
-            © 2020 Vespi. All rights reserved. This is a Process Masterclass
-            lesson.
+            © {new Date().getFullYear()} Vespi. All rights reserved. This is a
+            Process Masterclass lesson.
           </p>
         </div>
       </footer>

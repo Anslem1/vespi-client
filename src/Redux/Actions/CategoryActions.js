@@ -1,13 +1,10 @@
-import { useDispatch } from 'react-redux'
 import axios from '../helpers/axios'
 import { categoryConstant } from './constants'
 
 export function getCategory () {
   return async dispatch => {
     const res = await axios.get('/categories')
-    // console.log(res.data[0].children.map(men => {
-    //   return men.slug
-    // }))
+    
     dispatch({
       type: categoryConstant.GET_ALL_CATEGORIES_REQUEST
     })

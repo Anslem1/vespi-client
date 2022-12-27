@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 function MobileNavLink ({ viewMenu }) {
   const auth = useSelector(state => state.auth)
-  const PF = 'http://localhost:5000/images/'
 
   const userCreds = localStorage.getItem('userCreds')
 
@@ -40,19 +39,20 @@ function MobileNavLink ({ viewMenu }) {
         <li>
           {userCreds === null ? (
             <div className='mobile-login-register'>
-              <li>
+              <ul>
                 <Link to='/register'>Register</Link>
-              </li>
-              <li>
+              </ul>
+              <ul>
                 <Link to='/login'>Login</Link>
-              </li>
+              </ul>
             </div>
           ) : (
             <Link to='/profile' className='link'>
-              {auth.userCreds.profilePicture ? (
+              {auth.userCreds.profilePicture &&
+              auth.userCreds.profilePicture ? (
                 <img
                   className='profile-picture'
-                  src={PF + auth.userCreds.profilePicture}
+                  src={auth.userCreds.profilePicture}
                   // src='https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'
                   alt=''
                 />

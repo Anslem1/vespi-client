@@ -1,4 +1,4 @@
-import { Link, Navigate, Route } from 'react-router-dom'
+import { Link, Navigate, Route, useLocation, useParams } from 'react-router-dom'
 import './Login.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -8,10 +8,11 @@ import { LoginUser } from '../../Redux/Actions'
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const auth = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
+
+  // console.log()
 
   // useEffect(() => {
   //   if (!auth.authenticate) {
@@ -19,21 +20,15 @@ function Login () {
   //   }
   // }, [])
   function UserLogin (e) {
-      try {
-      e.preventDefault()
-      const user = {
-        username,
-        password
-      }
-      dispatch(LoginUser(user))
-    } catch (error) {
-      setError(true)
+    e.preventDefault()
+    const user = {
+      username,
+      password
     }
-    }
-
-  if (auth.authenticate) {
-    return <Navigate replace={true} to='/' />
+    dispatch(LoginUser(user))
   }
+
+
 
   return (
     <>
@@ -68,7 +63,9 @@ function Login () {
           </div>
           <button className='login_btn'>Login</button>
         </form>
-        {error && <h3 className='error'>Wrong unsername or password</h3>}
+        {auth.error === 'Account updated Succesfully'
+          ? null
+          : auth.error && <h3 className='error'>{auth.error}</h3>}
       </div>
     </>
   )

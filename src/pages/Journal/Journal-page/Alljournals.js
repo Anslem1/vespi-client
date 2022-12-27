@@ -9,7 +9,7 @@ function Journal ({ journal }) {
       <h1 className='heading-text'>Journal</h1>
       <div className='journal-content'>
         {journal.map(journal => {
-          return <Journalpage journal={journal} />
+          return <Journalpage journal={journal} key={journal._id} />
         })}
       </div>
 

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer/Footer'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteUserAccount, logOutUser, updateUser } from '../../Redux/Actions'
+import {
+  deleteUserAccount,
+  logOutUser,
+  updateUser,
+  updateUserAccount
+} from '../../Redux/Actions'
 import { isUserLoggedin } from '../../Redux/Actions'
 import './Profile.css'
 import axios from '../../Redux/helpers/axios'
@@ -15,13 +20,10 @@ function Profile () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-  const [_id, set_Id] = useState('')
-  const [id, setId] = useState('')
-  const [success, setSuccess] = useState(false)
-  const [error, setErrror] = useState(false)
+
+  const profileParams = useLocation()
 
   const auth = useSelector(state => state.auth)
-  const PF = 'http://localhost:5000/images/'
 
   useEffect(() => {
     if (!auth.authenticate) {
@@ -32,51 +34,21 @@ function Profile () {
   function Logout () {
     window.localStorage.clear()
     dispatch(logOutUser())
-    window.location.reload()
+
   }
 
-  if (auth.authenticate === false) {
-    return <Navigate replace={true} to='/login' />
+  
+
+  async function submitProfile () {
+    const form = new FormData()
+    form.append('_id', auth.userCreds._id)
+    form.append('username', username)
+    form.append('email', email)
+    form.append('profilePicture', profilePicture)
+    form.append('password', password)
+
+    dispatch(updateUserAccount(auth.userCreds._id, form))
   }
-
-  async function submitProfile (e) {
-    e.preventDefault()
-    const updatedUserCreds = {
-      _id: auth.userCreds._id,
-      username,
-      email,
-      profilePicture: auth.userCreds.profilePicture,
-      password
-    }
-    if (profilePicture) {
-      try {
-        const data = new FormData()
-        const filename = nanoid() + profilePicture.name
-        data.append('file', filename)
-        data.append('file', profilePicture)
-        updatedUserCreds.profilePicture = filename
-        await axios.post('/upload', data)
-        await axios.put(`/users/${auth.userCreds._id}`, {
-          ...updatedUserCreds
-        })
-        localStorage.setItem('userCreds', JSON.stringify(updatedUserCreds))
-      } catch (err) {}
-    }
-    try {
-      await axios.put(`/users/${auth.userCreds._id}`, {
-        ...updatedUserCreds
-      })
-      localStorage.setItem('userCreds', JSON.stringify(updatedUserCreds))
-      setSuccess(true)
-    } catch (error) {
-      setErrror(true)
-      setSuccess(false)
-    }
-  }
-
-
-
-  // console.log(auth)
 
   return (
     <>
@@ -89,13 +61,13 @@ function Profile () {
           Logout
         </button>
       </div>
-      <form className='my-profile' action='' onSubmit={submitProfile}>
+      <main className='my-profile'>
         <h1 className='setting__header'>My Profile</h1>
         <div className='settings-container'>
           <div className='profile-img-container'>
             {auth.userCreds.profilePicture ? (
               <img
-                src={PF + auth.userCreds.profilePicture}
+                src={auth.userCreds.profilePicture}
                 alt=''
                 className='profile-img'
               />
@@ -129,7 +101,6 @@ function Profile () {
               className='username_input username'
               placeholder={auth.userCreds.username}
               onChange={e => setUsername(e.target.value)}
-              required
             />
           </div>
           <div className='input-container'>
@@ -137,7 +108,6 @@ function Profile () {
             <input
               type='email'
               className='username_input email'
-              required
               placeholder={auth.userCreds.email}
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -149,21 +119,25 @@ function Profile () {
               type='password'
               className='username_input'
               onChange={e => setPassword(e.target.value)}
-              required
             />
           </div>
+
           <div className='btn-container'>
-            <button className='update_profile_btn' type='submit'>
-              Update account
-            </button>
+            {(username || email || password || profilePicture) && (
+              <button className='update_profile_btn' onClick={submitProfile}>
+                Update account
+              </button>
+            )}
           </div>
         </div>
-        {success && <h3 className='error'>Account updated Succesfully</h3>}
-        {error && <h3 className='error'>Something went wrong</h3>}
-      </form>
+        {auth.message && <h3 className='error'>{auth.message}</h3>}
 
-   
-    
+        {auth.error === 'We could not find that user' ||
+        auth.error === 'Wrong username or password' ||
+        auth.error === 'Username already exists'
+          ? null
+          : auth.error && <h3 className='error'>{auth.error}</h3>}
+      </main>
 
       <Footer />
     </>
