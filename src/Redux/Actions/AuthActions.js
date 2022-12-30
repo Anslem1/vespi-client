@@ -13,7 +13,7 @@ export function LoginUser (userCreds) {
       const res = await axios.post('/auth/login', {
         ...userCreds
       })
-  
+
       if (res.status === 200) {
         const { token, userCreds } = res.data
         localStorage.setItem('token', token)
@@ -43,16 +43,15 @@ export function register (userCreds) {
       const res = await axios.post('/auth/register', {
         ...userCreds
       })
- 
+
       if (res.status === 200) {
- 
         const {
           data,
           data: { token }
         } = res
         localStorage.setItem('token', data.token)
         localStorage.setItem('userCreds', JSON.stringify(data.user))
-    
+
         dispatch({
           type: registerConstants.USER_REGISTER_SUCCESS,
           payload: {
@@ -70,7 +69,7 @@ export function register (userCreds) {
       }
     } catch (error) {
       console.log({ error })
-   
+
       dispatch({
         type: registerConstants.USER_REGISTER_FAILURE,
         payload: { error: error.response.data.message }
@@ -128,7 +127,6 @@ export function updateUserAccount (id, form) {
           message,
           userCreds: { ...credentials }
         } = res.data
-      
 
         localStorage.setItem('userCreds', JSON.stringify(credentials))
         dispatch({
@@ -144,17 +142,20 @@ export function updateUserAccount (id, form) {
     }
   }
 }
-export function deleteUserAccount (id) {
+export function deleteUserAccount (id, navigate) {
   return async dispatch => {
+    console.log({ id })
+
     dispatch({ type: deleteUserConstant.DELETE_USER_REQUEST })
     const res = await axios.delete(`/users/${id}`, { ...id })
     if (res.status === 200) {
-      window.localStorage.clear()
-      window.location.replace('/login')
       dispatch({
         type: deleteUserConstant.DELETE_USER_SUCCESS,
         payload: res.data
       })
+      dispatch({ type: authConstant.LOGOUT_SUCCESS })
+      window.localStorage.clear()
+      navigate('/login')
     } else {
       dispatch({
         type: deleteUserConstant.DELETE_USER_FAILURE

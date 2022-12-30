@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer/Footer'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   deleteUserAccount,
@@ -11,8 +11,6 @@ import {
 } from '../../Redux/Actions'
 import { isUserLoggedin } from '../../Redux/Actions'
 import './Profile.css'
-import axios from '../../Redux/helpers/axios'
-import { nanoid } from 'nanoid'
 
 function Profile () {
   const dispatch = useDispatch()
@@ -20,6 +18,8 @@ function Profile () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+
+  const navigate = useNavigate()
 
   const profileParams = useLocation()
 
@@ -34,12 +34,9 @@ function Profile () {
   function Logout () {
     window.localStorage.clear()
     dispatch(logOutUser())
-
   }
 
-  
-
-  async function submitProfile () {
+  function submitProfile () {
     const form = new FormData()
     form.append('_id', auth.userCreds._id)
     form.append('username', username)
@@ -48,6 +45,14 @@ function Profile () {
     form.append('password', password)
 
     dispatch(updateUserAccount(auth.userCreds._id, form))
+  }
+
+  function deleteAccount() {
+    const form = new FormData()
+    form.append('id', auth.userCreds._id)
+ 
+
+    dispatch(deleteUserAccount(auth.userCreds._id, navigate))
   }
 
   return (
@@ -129,6 +134,9 @@ function Profile () {
               </button>
             )}
           </div>
+          <button className='delete_profile_btn' onClick={deleteAccount}>
+            delete account
+          </button>
         </div>
         {auth.message && <h3 className='error'>{auth.message}</h3>}
 

@@ -11,14 +11,6 @@ function Login () {
   const auth = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
-
-  // console.log()
-
-  // useEffect(() => {
-  //   if (!auth.authenticate) {
-  //     dispatch(isUserLoggedin())
-  //   }
-  // }, [])
   function UserLogin (e) {
     e.preventDefault()
     const user = {
@@ -27,8 +19,6 @@ function Login () {
     }
     dispatch(LoginUser(user))
   }
-
-
 
   return (
     <>
