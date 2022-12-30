@@ -144,7 +144,6 @@ export function updateUserAccount (id, form) {
 }
 export function deleteUserAccount (id, navigate) {
   return async dispatch => {
-    console.log({ id })
 
     dispatch({ type: deleteUserConstant.DELETE_USER_REQUEST })
     const res = await axios.delete(`/users/${id}`, { ...id })
