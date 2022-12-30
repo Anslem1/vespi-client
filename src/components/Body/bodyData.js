@@ -70,10 +70,10 @@ export default [
   {
     image: '../assets/images/body-images/image4.svg',
     heading: (
-      <p className='italic'>
+      <i className='italic'>
         “Our mission is to bring the best of New Yorks <br />
         local designers to the rest of the world.”
-      </p>
+      </i>
     )
   },
   {

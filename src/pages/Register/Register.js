@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 import './Register.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../Redux/Actions'
-// import { isUserLoggedin } from '../../Redux/Actions'
+import RenderLoading from '../../components/LoadingPage/RenderLoading'
 
 function Register () {
   const [username, setUsername] = useState('')
@@ -23,20 +23,27 @@ function Register () {
       email,
       password
     }
-    try {
-      dispatch(register(user))
-      // window.location.replace('/login')
-    } catch (err) {
-      setError(true)
-    }
+    dispatch(register(user))
+    // window.location.replace('/login')
   }
 
-  if (auth.authenticate) {
-    return <Navigate replace={true} to='/' />
-  }
+  // if (auth.authenticate) {
+  //   return <Navigate replace={true} to='/' />
+  // }
+  // console.log(auth.authenticating)
 
   return (
     <>
+      <div
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          display: `${user.registering === true ? 'block' : 'none'}`
+        }}
+      >
+        <RenderLoading />
+      </div>
       <form action='' onSubmit={UserRegister} className='register-container'>
         <h1 className='register-header'>Register</h1>
         <div className='register-details'>

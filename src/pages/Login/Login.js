@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { isUserLoggedin } from '../../Redux/Actions'
 import { LoginUser } from '../../Redux/Actions'
+import RenderLoading from '../../components/LoadingPage/RenderLoading'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -23,6 +24,7 @@ function Login () {
   return (
     <>
       <div className='login-container'>
+        <RenderLoading />
         <div>
           <h1 className='login-header'>Login</h1>
 

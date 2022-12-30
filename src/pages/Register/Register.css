@@ -14,8 +14,6 @@
 }
 
 .register-header {
-     top: 100px;
-     /* position: absolute; */
      text-align: center;
      left: 0;
      right: 0;
@@ -68,13 +66,13 @@
      margin-bottom: 20px;
 }
 
-.error{
+.error {
      font-size: 25px;
-     color: rgb(255, 0, 132);
+     color: back;
      margin-bottom: 20px;
 }
 
-.loading_screen{
+.loading_screen {
      display: flex;
      width: 100%;
      height: 100vh;
