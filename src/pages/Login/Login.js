@@ -9,6 +9,7 @@ import RenderLoading from '../../components/LoadingPage/RenderLoading'
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
   const auth = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
@@ -20,6 +21,12 @@ function Login () {
     }
     dispatch(LoginUser(user))
   }
+  useEffect(() => {
+    auth.error && setError(true)
+      setTimeout(() => {
+        setError(false)
+      }, 2000)
+  }, [auth.authenticating])
 
   return (
     <>
@@ -57,7 +64,7 @@ function Login () {
         </form>
         {auth.error === 'Account updated Succesfully'
           ? null
-          : auth.error && <h3 className='error'>{auth.error}</h3>}
+          : error && <h3 className='error'>{auth.error}</h3>}
       </div>
     </>
   )
